@@ -1,0 +1,20 @@
+body{
+    background-image: url("../images/asfalt.png");
+	color: rgb(223, 152, 20);
+}
+#letsPlay{
+	color: rgb(223, 152, 20);
+	font-size: 26px;
+
+}
+
+@media screen and (max-width: 640px){
+	img{
+		width:100% !important;
+	}
+	.left{
+		padding-top: 20px;
+	}
+	
+
+}
