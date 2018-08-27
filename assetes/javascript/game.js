@@ -6,7 +6,6 @@ var guessesLeft = 14;
 var underScores= [];
 var userGuesses = [];
 var wrongLetter = [];
-var  guessesholder = [];
 var randomWord;
 
 
@@ -20,10 +19,12 @@ function startGame(){
     console.log(randomWord);
     for (var i = 0;i<randomWord.length;i++){
 
-       underScores.push("_");       
+       underScores.push("_");              
     }
+   
 
     document.getElementById("user-input").textContent = underScores.join(" ");
+    
     wrongLetter = [];
     guessesLeft = 14;
     document.getElementById("guesses-remainig").textContent = guessesLeft;
@@ -37,25 +38,28 @@ document.onkeyup = function(event){
     userGuesses = event.key;
     //check if the letter exist inside of the word
     if(randomWord.indexOf(userGuesses)> -1){
+
         for(var i = 0;i< randomWord.length;i++){
+
             if(randomWord[i] === userGuesses){
+
                 underScores[i]=userGuesses;
-                guessesholder[i] = userGuesses;
-                 document.getElementById("user-input").textContent = guessesholder.join("");
-                 wins++;    
+                console.log(underScores);
+                document.getElementById("user-input").textContent = underScores.join(" ");
+                  
                           
             }
             
         }
          
-        console.log("correct guesse: " + userGuesses);
+        // console.log("correct guesse: " + userGuesses);
     }
     else{
       wrongLetter.push(userGuesses);
       guessesLeft--;
       console.log("incorrect guesses: " + userGuesses);
     }
-    document.getElementById("letters-guessed").textContent = wrongLetter;
+    // document.getElementById("letters-guessed").textContent = wrongLetter;
 }
 
 
