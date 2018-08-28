@@ -3,71 +3,96 @@ var wordBank = ["christina", "miley", "taylor", "bruno", "selena", "justin", "mi
 var wins = 0;
 var losses = 0;
 var guessesLeft = 14;
-var underScores= [];
+var underScores = [];
 var userGuesses = [];
 var wrongLetter = [];
 var randomWord;
-
+var guessedLetters = [];
+var gameRunning = false;
 
 
 //================================================Functions=============================================
 
-window.onload = function(){
+window.onload = function () {
 
-function startGame(){
-    randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
-    console.log(randomWord);
-    for (var i = 0;i<randomWord.length;i++){
-
-       underScores.push("_");              
-    }
-   
-
-    document.getElementById("user-input").textContent = underScores.join(" ");
-    
-    wrongLetter = [];
-    guessesLeft = 14;
     document.getElementById("guesses-remainig").textContent = guessesLeft;
     document.getElementById("winCount").textContent = wins;
     document.getElementById("loseCount").textContent = losses;
-    
+    document.getElementById("letters-guessed").textContent = guessedLetters;
+    document.getElementById("user-input").textContent = underScores;
 
-};
 
-document.onkeyup = function(event){
-    userGuesses = event.key;
-    //check if the letter exist inside of the word
-    if(randomWord.indexOf(userGuesses)> -1){
+    function startGame() {
+        gameRunning = true;
+        guessedLetter = [];
+        guessesLeft = 14;
+        wrongLetter = [];
+        pickWordPlaceHolder = [];
 
-        for(var i = 0;i< randomWord.length;i++){
+        randomWord = wordBank[Math.floor(Math.random() * wordBank.length)];
+        console.log(randomWord);
+        for (var i = 0; i < randomWord.length; i++) {
 
-            if(randomWord[i] === userGuesses){
-
-                underScores[i]=userGuesses;
-                console.log(underScores);
-                document.getElementById("user-input").textContent = underScores.join(" ");
-                  
-                          
-            }
-            
+            underScores.push("_");
         }
-         
-        // console.log("correct guesse: " + userGuesses);
+
+        document.getElementById("user-input").textContent = underScores.join(" ");
+        document.getElementById("guesses-remainig").textContent = guessesLeft;
+        document.getElementById("letters-guessed").textContent = wrongLetter;
+
+
+    };
+   
+
+
+
+    document.onkeyup = function (event) {
+        if (event.keyCode >= 65 && event.keyCode <= 90) {
+            userGuesses = event.key.toLowerCase();
+            //check if the letter exist inside of the word
+            if (randomWord.indexOf(userGuesses) > -1) {
+
+                for (var i = 0; i < randomWord.length; i++) {
+
+                    if (randomWord[i] === userGuesses) {
+
+                        underScores[i] = userGuesses;
+                        console.log(underScores);
+                        document.getElementById("user-input").textContent = underScores.join(" ");
+                    }
+
+
+                }
+
+                // console.log("correct guesse: " + userGuesses);
+            }
+            else {
+                wrongLetter.push(userGuesses);
+                guessesLeft--;
+                document.getElementById("letters-guessed").textContent = wrongLetter;
+                document.getElementById("guesses-remainig").textContent = guessesLeft;
+                stopGame();
+                console.log("guessesLeft: " + guessesLeft);
+            }
+            // document.getElementById("letters-guessed").textContent = wrongLetter;
+        }
+
     }
-    else{
-      wrongLetter.push(userGuesses);
-      guessesLeft--;
-      console.log("incorrect guesses: " + userGuesses);
+
+    function stopGame() {
+        if (guessesLeft === 0) {
+            wrongLetter = [];
+            underScores = [];
+            guessesLeft = 14;
+            gameOver = true;
+            //document.getElementById("user-input").textContent = underScores.join(" ");
+            //alert("Losser");
+
+        }
     }
-    // document.getElementById("letters-guessed").textContent = wrongLetter;
-}
 
-
-//============================Main==============================
-startGame();
-
-
-
+    //============================Main==============================
+    startGame();
 
 
 }
